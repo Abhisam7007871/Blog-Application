@@ -16,7 +16,7 @@ public class User {
     private String email;
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "users")
     private Set<BlogPost> blogPosts = new HashSet<>();
 
     public Long getId() {

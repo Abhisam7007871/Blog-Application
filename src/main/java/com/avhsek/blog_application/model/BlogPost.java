@@ -3,6 +3,8 @@ package com.avhsek.blog_application.model;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class BlogPost {
@@ -12,15 +14,26 @@ public class BlogPost {
     private Long id;
 
     private String title;
-
-    @Lob
     private String content;
 
-    private Date createdAt;
-
     @ManyToMany
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @JoinTable(
+            name = "blogpost_users",
+            joinColumns = @JoinColumn(name = "blogpost_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private Set<User> users = new HashSet<>();
+
+    @ManyToMany(mappedBy = "blogPosts")
+    private Set<Category> categories = new HashSet<>();
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
 
     public Long getId() {
         return id;
@@ -46,19 +59,11 @@ public class BlogPost {
         this.content = content;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
+    public Set<Category> getCategories() {
+        return categories;
     }
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
     }
 }

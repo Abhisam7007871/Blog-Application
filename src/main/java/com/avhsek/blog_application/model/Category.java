@@ -2,10 +2,11 @@ package com.avhsek.blog_application.model;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Catagory {
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,8 +14,13 @@ public class Catagory {
 
     private String name;
 
-    @OneToMany(mappedBy = "catagory", cascade = CascadeType.ALL)
-    private Set<BlogPost> blogPosts;
+    @ManyToMany
+    @JoinTable(
+            name = "category_blogpost",
+            joinColumns = @JoinColumn(name = "category_id"),
+            inverseJoinColumns = @JoinColumn(name = "blogpost_id")
+    )
+    private Set<BlogPost> blogPosts = new HashSet<>();
 
     public Long getId() {
         return id;
