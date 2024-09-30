@@ -11,7 +11,7 @@ import java.util.Optional;
 public class BlogPostService {
 
     @Autowired
-    private BlogPostRepository blogPostRepository;
+    private BlogPostRepository  blogPostRepository;
 
     // Get all posts
     public List<BlogPost> getAllPosts() {
@@ -41,9 +41,9 @@ public class BlogPostService {
     public String deletePost(Long id) {
         Optional<BlogPost> postToDelete = blogPostRepository.findById(id);
         if (postToDelete.isPresent()) {
-            BlogPost post = postToDelete.get();
+            BlogPost post  = postToDelete.get();
             blogPostRepository.deleteById(id);
-            // Returning the message with post ID and title
+            // Returning  the  message with  post  ID  and  title
             return "Post with ID: " + post.getId() + " and Title: " + post.getTitle() + " was deleted successfully.";
         } else {
             return "Post with ID: " + id + " not found.";
